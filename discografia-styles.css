@@ -60,20 +60,21 @@ html {
 
 .back-home {
   position: fixed;
-  top: 40px;
-  right: 200px;
-  z-index: 2000;
+  top: 30px;
+  right: 30px;
+  z-index: 1000;
+  color: var(--text-primary);
   text-decoration: none;
-  font-size: 12px;
-  letter-spacing: 2px;
+  font-size: 14px;
+  letter-spacing: 1px;
   transition: all 0.2s ease;
-  padding: 8px 16px;
-  background: var(--bg-secondary);
+  padding: 10px 0;
+  border-bottom: 2px solid transparent;
 }
 
 .back-home:hover {
   color: var(--accent-green);
-  transform: translateX(-5px);
+  border-bottom-color: var(--accent-green);
 }
 
 .main-nav {

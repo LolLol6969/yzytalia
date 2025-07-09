@@ -60,14 +60,12 @@ html {
   top: 40px;
   right: 200px;
   z-index: 2000;
-  color: var(--text-primary);
   text-decoration: none;
   font-size: 12px;
   letter-spacing: 2px;
   transition: all 0.2s ease;
   padding: 8px 16px;
   background: var(--bg-secondary);
-  clip-path: polygon(15% 0%, 100% 0%, 100% 100%, 0% 100%);
 }
 
 .back-home:hover {

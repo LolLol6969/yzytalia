@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YEEZYTALIA</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        :root {
+            --background-color: #F4F5F0;
+            --text-primary: #111111;
+            --text-secondary: #888888;
+            --accent-green: #008C45;
+            --accent-white: #F4F5F0;
+            --accent-red: #CD212A;
+        }
+
+        .dark-mode {
+            --background-color: #111111;
+            --text-primary: #FFFFFF;
+            --text-secondary: #888888;
+            --accent-white: #FFFFFF;
+        }
+
+        /* Reset e base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Yeezy TSTAR Bold", "Helvetica Neue", Arial, sans-serif;
+            font-weight: bold;
+            background-color: var(--background-color);
+            color: var(--text-primary);
+            line-height: 1.2;
+            overflow-x: hidden;
+            transition: all 0.2s ease;
+        }
+
+        /* Smooth scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Navigation fissa */
+        .main-nav {
+            position: fixed;
+            top: 40px;
+            right: 40px;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .nav-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .nav-item:hover,
+        .nav-item.active {
+            color: var(--accent-red);
+        }
+
+        .nav-number {
+            font-size: 14px;
+            letter-spacing: 2px;
+        }
+
+        .nav-text {
+            font-size: 14px;
+            letter-spacing: 2px;
+        }
+
+        .nav-bg {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: -1;
+        }
+
+        /* Toggle tema */
+        .theme-toggle {
+            position: fixed;
+            top: 40px;
+            left: 40px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: var(--text-primary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-white);
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        /* Sezioni base */
+        .main-content section {
+            min-height: 100vh;
+            padding: 80px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+            grid-template-rows: 1fr 2fr 1fr;
+            width: 100%;
+            height: 100vh;
+            gap: 40px;
+        }
+
+        .hero-title-container {
+            grid-column: 2;
+            grid-row: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-title {
+            font-size: clamp(60px, 12vw, 180px);
+            letter-spacing: -4px;
+            text-align: center;
+            align-self: center;
+        }
+
+        .title-line {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .title-line.offset {
+            margin-left: 20px;
+        }
+
+        .hero-accent {
+            grid-column: 2;
+            grid-row: 1;
+            width: 100%;
+            height: 100%;
+            background-color: var(--accent-green);
+            opacity: 0.5;
+        }
+
+        .hero-logo {
+            grid-column: 2;
+            grid-row: 1;
+            display: flex;
+            align-items: end;
+            justify-content: center;
+            padding-bottom: 20px;
+        }
+
+        .logo-image {
+            width: 120px;
+            height: 120px;
+            object-fit: contain;
+        }
+
+        .scroll-indicator {
+            display: none;
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-secondary);
+        }
+
+        .scroll-text {
+            font-size: 12px;
+            letter-spacing: 2px;
+        }
+
+        .scroll-line {
+            width: 100px;
+            height: 2px;
+            background-color: var(--text-secondary);
+        }
+
+        /* Social Section */
+        .social-section {
+            display: grid;
+            grid-template-columns: 2fr 1fr 2fr;
+            grid-template-rows: 1fr 1fr 1fr;
+            width: 100%;
+        }
+
+        .social-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .social-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 40px;
+        }
+
+        .social-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        .social-link {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 18px;
+            letter-spacing: 1px;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            padding: 30px 20px;
+            border: 2px solid var(--text-secondary);
+        }
+
+        .social-link:hover {
+            color: var(--accent-red);
+            border-color: var(--accent-red);
+            transform: translateY(-2px);
+        }
+
+        .social-name {
+            font-size: 16px;
+            letter-spacing: 1px;
+        }
+
+        .social-count {
+            font-size: 12px;
+            color: var(--text-secondary);
+            letter-spacing: 1px;
+        }
+
+        .social-description {
+            margin-top: 40px;
+            font-size: 16px;
+            color: var(--text-secondary);
+            text-align: center;
+            max-width: 600px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+  .main-nav {
+    top: 20px;
+    right: 20px;
+    gap: 15px;
+  }
+
+  .theme-toggle {
+    top: 20px;
+    left: 20px;
+  }
+
+  .main-content section {
+    padding: 60px 15px;
+  }
+
+  .hero-title {
+    font-size: clamp(40px, 15vw, 100px);
+  }
+
+  .logo-image {
+    width: 80px;
+    height: 80px;
+  }
+
+  .social-links {
+    grid-template-columns: 1fr;
+    gap: 15px;
+    max-width: 100%;
+  }
+
+  .social-link {
+    padding: 20px 15px;
+    font-size: 16px;
+  }
+
+  .social-name {
+    font-size: 14px;
+  }
+
+  .social-count {
+    font-size: 11px;
+  }
+
+  .social-description {
+    margin-top: 30px;
+    font-size: 14px;
+    padding: 0 10px;
+  }
+
+  .section-title {
+    font-size: 32px;
+    margin-bottom: 30px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: clamp(32px, 12vw, 70px);
+  }
+
+  .logo-image {
+    width: 60px;
+    height: 60px;
+  }
+
+  .social-link {
+    padding: 15px 10px;
+  }
+
+  .social-name {
+    font-size: 13px;
+  }
+
+  .social-count {
+    font-size: 10px;
+  }
+
+  .main-nav a {
+    font-size: 11px;
+  }
+}
+    </style>
+</head>
+<body>
+    <!-- Toggle tema -->
+    <div class="theme-toggle" id="themeToggle">●</div>
+
+    <!-- Navigazione fissa -->
+    <nav class="main-nav">
+        <a href="#social" data-section="social">SOCIAL</a>
+        <a href="discografia.html">DISCOGRAFIA</a>
+        <a href="merch.html">MERCH</a>
+    </nav>
+
+    <!-- Hero Section -->
+    <main class="main-content">
+        <section class="hero-section">
+            <div class="hero-grid">
+                <div class="hero-title-container">
+                    <h1 class="hero-title">
+                        <span class="title-line">YEEZY</span>
+                        <span class="title-line offset">TALIA</span>
+                    </h1>
+                </div>
+                <div class="hero-logo">
+                    <img src="images/cover/logo.svg" alt="YeezyTalia Logo" class="logo-image">
+                </div>
+            </div>
+        </section>
+
+        <!-- Social Section -->
+        <section id="social" class="social-section">
+            <div class="container">
+                <h2 class="section-title">SOCIAL</h2>
+                <div class="social-links">
+                    <a href="https://discord.gg/yeezytalia" class="social-link" target="_blank">
+                        <span class="social-name">DISCORD</span>
+                        <span class="social-count"></span>
+                    </a>
+                    <a href="https://t.me/yeezytalia" class="social-link" target="_blank">
+                        <span class="social-name">TELEGRAM</span>
+                        <span class="social-count"></span>
+                    </a>
+                    <a href="https://instagram.com/yeezytalia" class="social-link" target="_blank">
+                        <span class="social-name">INSTAGRAM</span>
+                        <span class="social-count"></span>
+                    </a>
+                    <a href="https://youtube.com/@yeezytalia" class="social-link" target="_blank">
+                        <span class="social-name">YOUTUBE</span>
+                        <span class="social-count"></span>
+                    </a>
+                    <a href="https://tiktok.com/@yeezytalia" class="social-link" target="_blank">
+                        <span class="social-name">TIKTOK</span>
+                        <span class="social-count"></span>
+                    </a>
+                </div>
+                <div class="social-description">
+                    <p>Unisciti alla community italiana di Yeezy per news, leak, drop alerts e discussioni sui progetti di Kanye West.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+ <footer class="site-footer">
+    Creato da Orla
+ </footer>    
+</body>
+</html>
